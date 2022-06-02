@@ -6,7 +6,9 @@
 			<div class="card-tools">
 				<a class="btn btn-block btn-sm btn-default btn-flat border-primary" href="./index.php?page=new_project"><i class="fa fa-plus"></i> Ajouter un marché</a>
 			</div>
-            <?php endif; ?>
+            <?php endif; 
+			
+			?>
 		</div>
 		<div class="card-body">
 			<table class="table tabe-hover table-condensed" id="list">
@@ -20,10 +22,10 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th class="text-center">#</th>
+						<th class="text-center">#</th>						
+						<th>Les marchés</th>
 						<th>N°ordre</th>
 						<th>N° d’Appel d’Offre</th>
-						<th>Les marchés</th>
 						<th>Date Started</th>
 						<th>Due Date</th>
 						<th>Status</th>
@@ -43,16 +45,17 @@
 					}
 					$qry = $conn->query("SELECT * FROM project_list $where order by name asc");
 					while($row= $qry->fetch_assoc()):
+						$org = $conn->query("SELECT *,name FROM org where id = " . $row['org_id']);
+						$org = $org->num_rows > 0 ? $org->fetch_array() : array();
 						$trans = get_html_translation_table(HTML_ENTITIES,ENT_QUOTES);
 						unset($trans["\""], $trans["<"], $trans[">"], $trans["<h2"]);
 						$desc = strtr(html_entity_decode($row['description']),$trans);
 						$desc=str_replace(array("<li>","</li>"), array("",", "), $desc);
-
 					 	$tprog = $conn->query("SELECT * FROM task_list where project_id = {$row['id']}")->num_rows;
-		                $cprog = $conn->query("SELECT * FROM task_list where project_id = {$row['id']} and status = 3")->num_rows;
+						$cprog = $conn->query("SELECT * FROM task_list where project_id = {$row['id']} and status = 3")->num_rows;
 						$prog = $tprog > 0 ? ($cprog/$tprog) * 100 : 0;
 		                $prog = $prog > 0 ?  number_format($prog,2) : $prog;
-		                $prod = $conn->query("SELECT * FROM user_productivity where project_id = {$row['id']}")->num_rows;
+		                $prod = $conn->query("SELECT * FROM user_productivity where project_id = {$row['id']}")->num_rows;		
 						if($row['status'] == 0 && strtotime(date('Y-m-d')) >= strtotime($row['start_date'])):
 						if($prod  > 0  || $cprog > 0)
 		                  $row['status'] = 2;
@@ -61,18 +64,28 @@
 						elseif($row['status'] == 0 && strtotime(date('Y-m-d')) > strtotime($row['end_date'])):
 						$row['status'] = 4;
 						endif;
+
 					?>
 					<tr>
-						<th class="text-center"><?php echo $i++ ?></th>
+						<th class="text-center"><?php echo $i++ ?></th>						
+						<td>
+							<p><b><?php if(isset($org['id'])) : ?>
+									<div class="d-flex align-items-center mt-1">
+										<b><?php 					
+										
+										echo ucwords(html_entity_decode($org['name'])) ?></b>
+									</div>
+									<?php else: ?>
+										<small><i>Organism Deleted from Database</i></small>
+									<?php endif; ?>
+								</b></p>
+							<p class="truncate"><?php echo strip_tags($desc) ?></p>
+						</td>
 						<td>
 							<p><b><?php echo ucwords($row['num_ordr']) ?></b></p>
 						</td>
 						<td>
 							<p><b><?php echo ucwords($row['num_offr']) ?></b></p>
-						</td>
-						<td>
-							<p><b><?php	echo ucwords($row['name']) ?></b></p>
-							<p class="truncate"><?php echo strip_tags($desc) ?></p>
 						</td>
 						<td><b><?php echo date("M d, Y",strtotime($row['start_date'])) ?></b></td>
 						<td><b><?php echo date("M d, Y",strtotime($row['end_date'])) ?></b></td>

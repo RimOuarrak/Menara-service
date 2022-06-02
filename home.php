@@ -64,6 +64,8 @@ if($_SESSION['login_type'] != 1)
                 }
                 $qry = $conn->query("SELECT * FROM project_list $where order by name asc");
                 while($row= $qry->fetch_assoc()):
+                  $org = $conn->query("SELECT *,name FROM org where id = " . $row['org_id']);
+						$org = $org->num_rows > 0 ? $org->fetch_array() : array();
                   $prog= 0;
                 $tprog = $conn->query("SELECT * FROM task_list where project_id = {$row['id']}")->num_rows;
                 $cprog = $conn->query("SELECT * FROM task_list where project_id = {$row['id']} and status = 3")->num_rows;
@@ -84,9 +86,15 @@ if($_SESSION['login_type'] != 1)
                          <?php echo $i++ ?>
                       </td>
                       <td>
-                          <a>
-                              <?php echo ucwords($row['name']) ?>
-                          </a>
+                          <b><?php if(isset($org['id'])) : ?>
+									<div class="d-flex align-items-center mt-1">
+										<b><?php echo ucwords(html_entity_decode($org['name'])) ?></b>
+									</div>
+									<?php else: ?>
+										<small><i>Organism Deleted from Database</i></small>
+									<?php endif; ?>
+								</b>
+
                           <br>
                           <small>
                               Due: <?php echo date("Y-m-d",strtotime($row['end_date'])) ?>

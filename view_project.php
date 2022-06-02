@@ -197,7 +197,7 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 					                      <div class="dropdown-divider"></div>
 					                      <a class="dropdown-item delete_task" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Delete</a>
 										  <div class="dropdown-divider"></div>
-										  <a class="dropdown-item fichier" data-pid = '<?php echo $row['pid'] ?>' data-tid = '<?php echo $row['id'] ?>'  data-task = '<?php echo ucwords($row['task']) ?>'  href="cprov.php?id=<?php echo $row['id'] ?>">PDF</a>
+										  <a class="dropdown-item fichier" data-pid = '<?php echo $row['pid'] ?>' data-tid = '<?php echo $row['id'] ?>'  data-task = '<?php echo ucwords($row['task']) ?>'  target="_blank" href="cprov.php?id=<?php echo $row['id'] ?> ">PDF</a>
 					                  <?php endif; ?>
 					                    </div>
 									</td>
@@ -271,6 +271,9 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 	$('.edit_task').click(function(){
 		uni_modal("Modification de caution: "+$(this).attr('data-task'),"manage_task.php?pid=<?php echo $id ?>&id="+$(this).attr('data-id'),"mid-large")
 	})
+	$('.delete_task').click(function(){
+		_conf("Voulez vous vraiment supprimer cette caution?","delete_task",[$(this).attr('data-id')])
+	})
 	$('.view_task').click(function(){
 		uni_modal("Détails de la caution","view_task.php?id="+$(this).attr('data-id'),"mid-large")
 	})
@@ -280,6 +283,7 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 	$('.manage_progress').click(function(){
 		uni_modal("<i class='fa fa-edit'></i> Edit Progress","manage_progress.php?pid=<?php echo $id ?>&id="+$(this).attr('data-id'),'large')
 	})
+	
 	$('.spr_fichier').click(function(){
 	_conf("Are you sure to delete this progress?","spr_fichier",[$(this).attr('data-id')])
 	})
@@ -300,4 +304,22 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 			}
 		})
 	}
+	function delete_task($id){
+		start_load()
+		$.ajax({
+			url:'ajax.php?action=delete_task',
+			method:'POST',
+			data:{id:$id},
+			success:function(resp){
+				if(resp==1){
+					alert_toast("Data successfully deleted",'success')
+					setTimeout(function(){
+						location.reload()
+					},1500)
+
+				}
+			}
+		})
+	}
+	
 </script>
