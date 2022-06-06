@@ -17,9 +17,15 @@ if(isset($_GET['id'])){
 			<select name="task" class="form-control form-control-sm">
 			<option value="Caution provisoire">Caution provisoire</option>
 			<option value="Caution difinitive">Caution difinitive</option>
-			</select>
-
-			
+			</select>			
+		</div>
+		<div class="form-group">
+			<label for="name">Nom de la banque</label>
+			<input type="text" name="bq_name" id="bq_name" class="form-control" value="<?php echo isset($meta['bq_name']) ? $meta['bq_name']: '' ?>" required>
+		</div>
+		<div class="form-group">
+			<label for="name">Nom de l'agence</label>
+			<input type="text" name="agence" id="agence" class="form-control" value="<?php echo isset($meta['agence']) ? $meta['agence']: '' ?>" required>
 		</div>
 		<div class="form-group">
 			<label for="">Description</label>

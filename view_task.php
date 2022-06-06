@@ -13,6 +13,14 @@ if(isset($_GET['id'])){
 		<dd><?php echo ucwords($task) ?></dd>
 	</dl>
 	<dl>
+		<dt><b class="border-bottom border-primary">Banque</b></dt>
+		<dd><?php echo ucwords($bq_name) ?></dd>
+	</dl>
+	<dl>
+		<dt><b class="border-bottom border-primary">Agence</b></dt>
+		<dd><?php echo ucwords($agence) ?></dd>
+	</dl>
+	<dl>
 		<dt><b class="border-bottom border-primary">Status</b></dt>
 		<dd>
 			<?php 

@@ -23,6 +23,8 @@
 						<th class="text-center">#</th>
 						<th>Project</th>
 						<th>Caution</th>
+						<th>Banque</th>
+						<th>Agence</th>
 						<th>Project Started</th>
 						<th>Project Due Date</th>
 						<th>Project Status</th>
@@ -82,6 +84,12 @@
 						<td>
 							<p><b><?php echo ucwords($row['task']) ?></b></p>
 							<p class="truncate"><?php echo strip_tags($desc) ?></p>
+						</td>
+						<td>
+							<p><b><?php echo ucwords($row['bq_name']) ?></b></p>
+						</td>
+						<td>
+							<p><b><?php echo ucwords($row['agence']) ?></b></p>
 						</td>
 						<td><b><?php echo date("M d, Y",strtotime($row['start_date'])) ?></b></td>
 						<td><b><?php echo date("M d, Y",strtotime($row['end_date'])) ?></b></td>

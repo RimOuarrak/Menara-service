@@ -156,6 +156,7 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 						<thead>
 							<th>#</th>
 							<th>Cautions</th>
+							<th>Banque</th>
 							<th>Description</th>
 							<th>Status</th>
 							<th>Action</th>
@@ -173,6 +174,7 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 								<tr>
 			                        <td class="text-center"><?php echo $i++ ?></td>
 			                        <td class=""><b><?php echo ucwords($row['task']) ?></b></td>
+									<td class=""><b><?php echo ucwords($row['bq_name']) ?></b></td>
 			                        <td class=""><p class="truncate"><?php echo strip_tags($desc) ?></p></td>
 			                        <td>
 			                        	<?php 
@@ -213,51 +215,59 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 		</div>
 	</div>
 	
-	
 	<div class="row">
 		<div class="col-md-12">
-			<div class="card">
+			<div class="card card-outline card-primary">
 				<div class="card-header">
-					<b>Fichiers</b>
-
-
-
-
-
-  
-
-
-
-
+					<span><b>Les liens:</b></span>
+					<?php if($_SESSION['login_type'] != 3): ?>
 					<div class="card-tools">
-					<form action="index.php" method="post" enctype="multipart/form-data" >	
-						<label class="btn btn-primary bg-gradient-primary btn-sm"><i class="fa fa-plus"></i>
-					<input type="file" multiple/> <!-- webkitdirectory directory multiple for folder!-->Nouveau fichier
-				</label>
-						</form>
-				<style>
-					input[type="file"] {
-											display: none;
-										}
-				</style>
-				
-</table>
+						<button class="btn btn-primary bg-gradient-primary btn-sm" type="button" id="new_link"><i class="fa fa-plus"></i> Ajouter une lien</button>
+					</div>
+				<?php endif; ?>
 				</div>
-				</div>
-				<div class="card-body">
-					
-						<div class="post">
-		                      <p>
-		                        <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 1 v2</a> -->
-		                      </p>
-	                    </div>
-	                    <div class="post clearfix"></div>
-                   
+				<div class="card-body p-0">
+					<div class="table-responsive">
+					<table class="table table-condensed m-0">
+						<colgroup>
+							<col width="85%">							
+							<col width="15%">
+						</colgroup>
+						<tbody>
+							<?php 
+							$i = 1;
+							$links = $conn->query("SELECT * FROM docs where project_id = {$id} order by nom asc");
+							while($row=$links->fetch_assoc()):
+							?>
+								<tr>
+								<td><a href="<?php echo ucwords($row['link'])?>" target="_blank" class="link-black text-sm"><i class="fas fa-link mr-1"></i><?php echo ucwords($row['nom'])?></a></td>			                        
+			                        <td class="text-center">
+										<button type="button" class="btn btn-default btn-sm btn-flat border-info wave-effect text-info dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+					                      Action
+					                    </button>
+					                    <div class="dropdown-menu" style="">
+					                      <?php if($_SESSION['login_type'] != 3): ?>
+					                      <a class="dropdown-item edit_link" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"  data-link="<?php echo $row['nom'] ?>">Edit</a>
+					                      <div class="dropdown-divider"></div>
+					                      <a class="dropdown-item delete_link" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Delete</a>
+					                  <?php endif; ?>
+					                    </div>
+									</td>
+		                    	</tr>
+							<?php 
+							endwhile;
+							?>
+						</tbody>
+					</table>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
+	
+	
+	
+	
 <style>
 
 	.truncate {
@@ -266,7 +276,7 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 </style>
 <script>
 	$('#new_task').click(function(){
-		uni_modal("Ajouter une caution pour <?php echo ucwords($name) ?>","manage_task.php?pid=<?php echo $id ?>","mid-large")
+		uni_modal("Ajouter une caution pour <?php echo ucwords(html_entity_decode($org['name'])) ?>","manage_task.php?pid=<?php echo $id ?>","mid-large")
 	})
 	$('.edit_task').click(function(){
 		uni_modal("Modification de caution: "+$(this).attr('data-task'),"manage_task.php?pid=<?php echo $id ?>&id="+$(this).attr('data-id'),"mid-large")
@@ -277,6 +287,17 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 	$('.view_task').click(function(){
 		uni_modal("Détails de la caution","view_task.php?id="+$(this).attr('data-id'),"mid-large")
 	})
+
+	$('#new_link').click(function(){
+		uni_modal("Ajouter un lien pour <?php echo ucwords(html_entity_decode($org['name'])) ?>","manage_link.php?pid=<?php echo $id ?>","mid-large")
+	})
+	$('.edit_link').click(function(){
+		uni_modal("Modification du lien "+$(this).attr('data-link'),"manage_link.php?pid=<?php echo $id ?>&id="+$(this).attr('data-id'),"mid-large")
+	})
+	$('.delete_link').click(function(){
+		_conf("Voulez vous vraiment supprimer cette caution?","delete_link",[$(this).attr('data-id')])
+	})
+
 	$('#ajt_fichier').click(function(){
 		uni_modal("<i class='fa fa-plus'></i> Fichiers","manage_progress.php?pid=<?php echo $id ?>",'large')
 	})
@@ -308,6 +329,23 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 		start_load()
 		$.ajax({
 			url:'ajax.php?action=delete_task',
+			method:'POST',
+			data:{id:$id},
+			success:function(resp){
+				if(resp==1){
+					alert_toast("Data successfully deleted",'success')
+					setTimeout(function(){
+						location.reload()
+					},1500)
+
+				}
+			}
+		})
+	}
+	function delete_link($id){
+		start_load()
+		$.ajax({
+			url:'ajax.php?action=delete_link',
 			method:'POST',
 			data:{id:$id},
 			success:function(resp){
