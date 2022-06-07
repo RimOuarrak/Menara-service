@@ -70,7 +70,7 @@ Class Action {
 			exit;
 		}
 		if(isset($_FILES['img']) && $_FILES['img']['tmp_name'] != ''){
-			$fname = strtotime(date('y-m-d H:i')).'_'.$_FILES['img']['name'];
+			$fname = strtotime(date('d-m-y H:i')).'_'.$_FILES['img']['name'];
 			$move = move_uploaded_file($_FILES['img']['tmp_name'],'assets/uploads/'. $fname);
 			$data .= ", avatar = '$fname' ";
 
@@ -110,7 +110,7 @@ Class Action {
 			exit;
 		}
 		if(isset($_FILES['img']) && $_FILES['img']['tmp_name'] != ''){
-			$fname = strtotime(date('y-m-d H:i')).'_'.$_FILES['img']['name'];
+			$fname = strtotime(date('d-m-y H:i')).'_'.$_FILES['img']['name'];
 			$move = move_uploaded_file($_FILES['img']['tmp_name'],'assets/uploads/'. $fname);
 			$data .= ", avatar = '$fname' ";
 
@@ -155,7 +155,7 @@ Class Action {
 			exit;
 		}
 		if(isset($_FILES['img']) && $_FILES['img']['tmp_name'] != ''){
-			$fname = strtotime(date('y-m-d H:i')).'_'.$_FILES['img']['name'];
+			$fname = strtotime(date('d-m-y H:i')).'_'.$_FILES['img']['name'];
 			$move = move_uploaded_file($_FILES['img']['tmp_name'],'assets/uploads/'. $fname);
 			$data .= ", avatar = '$fname' ";
 
@@ -197,7 +197,7 @@ Class Action {
 			}
 		}
 		if($_FILES['cover']['tmp_name'] != ''){
-			$fname = strtotime(date('y-m-d H:i')).'_'.$_FILES['cover']['name'];
+			$fname = strtotime(date('d-m-y H:i')).'_'.$_FILES['cover']['name'];
 			$move = move_uploaded_file($_FILES['cover']['tmp_name'],'../assets/uploads/'. $fname);
 			$data .= ", cover_img = '$fname' ";
 
@@ -223,7 +223,7 @@ Class Action {
 	function save_image(){
 		extract($_FILES['file']);
 		if(!empty($tmp_name)){
-			$fname = strtotime(date("Y-m-d H:i"))."_".(str_replace(" ","-",$name));
+			$fname = strtotime(date("d-m-y H:i"))."_".(str_replace(" ","-",$name));
 			$move = move_uploaded_file($tmp_name,'assets/uploads/'. $fname);
 			$protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"],0,5))=='https'?'https':'http';
 			$hostName = $_SERVER['HTTP_HOST'];

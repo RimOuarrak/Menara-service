@@ -45,12 +45,12 @@
                 $prod = $conn->query("SELECT * FROM user_productivity where project_id = {$row['id']}")->num_rows;
                 $dur = $conn->query("SELECT sum(time_rendered) as duration FROM user_productivity where project_id = {$row['id']}");
                 $dur = $dur->num_rows > 0 ? $dur->fetch_assoc()['duration'] : 0;
-                if($row['status'] == 0 && strtotime(date('Y-m-d')) >= strtotime($row['start_date'])):
+                if($row['status'] == 0 && strtotime(date('d-m-y')) >= strtotime($row['start_date'])):
                 if($prod  > 0  || $cprog > 0)
                   $row['status'] = 2;
                 else
                   $row['status'] = 1;
-                elseif($row['status'] == 0 && strtotime(date('Y-m-d')) > strtotime($row['end_date'])):
+                elseif($row['status'] == 0 && strtotime(date('d-m-y')) > strtotime($row['end_date'])):
                 $row['status'] = 4;
                 endif;
                   ?>
@@ -64,7 +64,7 @@
                           </a>
                           <br>
                           <small>
-                              Due: <?php echo date("Y-m-d",strtotime($row['end_date'])) ?>
+                              Due: <?php echo date("d-m-y",strtotime($row['end_date'])) ?>
                           </small>
                       </td>
                       <td class="text-center">

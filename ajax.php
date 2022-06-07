@@ -81,6 +81,16 @@ if($action == 'delete_task'){
 	if($save)
 		echo $save;
 }
+if($action == 'save_link'){
+	$save = $crud->save_link();
+	if($save)
+		echo $save;
+}
+if($action == 'delete_link'){
+	$save = $crud->delete_link();
+	if($save)
+		echo $save;
+}
 if($action == 'save_progress'){
 	$save = $crud->save_progress();
 	if($save)

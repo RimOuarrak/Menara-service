@@ -10,12 +10,12 @@ $cprog = $conn->query("SELECT * FROM task_list where project_id = {$id} and stat
 $prog = $tprog > 0 ? ($cprog/$tprog) * 100 : 0;
 $prog = $prog > 0 ?  number_format($prog,2) : $prog;
 $prod = $conn->query("SELECT * FROM user_productivity where project_id = {$id}")->num_rows;
-if($status == 0 && strtotime(date('Y-m-d')) >= strtotime($start_date)):
+if($status == 0 && strtotime(date('d-m-y')) >= strtotime($start_date)):
 if($prod  > 0  || $cprog > 0)
   $status = 2;
 else
   $status = 1;
-elseif($status == 0 && strtotime(date('Y-m-d')) > strtotime($end_date)):
+elseif($status == 0 && strtotime(date('d-m-y')) > strtotime($end_date)):
 $status = 4;
 endif;
 $manager = $conn->query("SELECT *,concat(firstname,' ',lastname) as name FROM users where id = $manager_id");

@@ -59,12 +59,12 @@
 						$prog = $tprog > 0 ? ($cprog/$tprog) * 100 : 0;
 		                $prog = $prog > 0 ?  number_format($prog,2) : $prog;
 		                $prod = $conn->query("SELECT * FROM user_productivity where project_id = {$row['pid']}")->num_rows;
-		                if($row['pstatus'] == 0 && strtotime(date('Y-m-d')) >= strtotime($row['start_date'])):
+		                if($row['pstatus'] == 0 && strtotime(date('d-m-y')) >= strtotime($row['start_date'])):
 		                if($prod  > 0  || $cprog > 0)
 		                  $row['pstatus'] = 2;
 		                else
 		                  $row['pstatus'] = 1;
-		                elseif($row['pstatus'] == 0 && strtotime(date('Y-m-d')) > strtotime($row['end_date'])):
+		                elseif($row['pstatus'] == 0 && strtotime(date('d-m-y')) > strtotime($row['end_date'])):
 		                $row['pstatus'] = 4;
 		                endif;
 
