@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 06 juin 2022 à 16:39
+-- Généré le : mer. 08 juin 2022 à 03:30
 -- Version du serveur : 10.4.21-MariaDB
 -- Version de PHP : 8.0.10
 
@@ -39,7 +39,7 @@ CREATE TABLE `docs` (
 --
 
 INSERT INTO `docs` (`id`, `project_id`, `nom`, `link`) VALUES
-(3, 13, 'test link', 'https://github.com/RimOuarrak/Menara-service');
+(5, 13, 'exemple marché', 'https://drive.google.com/open?id=116g7dOCjd37u-N6-TeuFLWtlI_p7CcCB&authuser=menaratools%40gmail.com&usp=drive_fs');
 
 -- --------------------------------------------------------
 
@@ -72,8 +72,7 @@ CREATE TABLE `org` (
 --
 
 INSERT INTO `org` (`id`, `name`, `email`, `num`) VALUES
-(12, 'COUR D&amp;#x2019;APPEL', 'crdpl@gmail.com', '+2126969696'),
-(13, 'test', 'll@kk.com', '');
+(12, 'COUR D&amp;#x2019;APPEL', 'crdpl@gmail.com', '+2126969696');
 
 -- --------------------------------------------------------
 
@@ -83,7 +82,7 @@ INSERT INTO `org` (`id`, `name`, `email`, `num`) VALUES
 
 CREATE TABLE `project_list` (
   `id` int(30) NOT NULL,
-  `name` varchar(200) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `status` tinyint(2) NOT NULL,
   `start_date` date NOT NULL,
@@ -98,7 +97,7 @@ CREATE TABLE `project_list` (
   `est_min` float NOT NULL,
   `est_max` float NOT NULL,
   `ville` varchar(100) NOT NULL,
-  `hr` varchar(255) NOT NULL,
+  `hr` time NOT NULL,
   `qc` varchar(255) NOT NULL,
   `org_id` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -108,7 +107,7 @@ CREATE TABLE `project_list` (
 --
 
 INSERT INTO `project_list` (`id`, `name`, `description`, `status`, `start_date`, `end_date`, `manager_id`, `user_ids`, `date_created`, `num_ordr`, `num_offr`, `ctn`, `est`, `est_min`, `est_max`, `ville`, `hr`, `qc`, `org_id`) VALUES
-(13, '', '&lt;p&gt;						description&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;', 0, '2002-03-13', '2039-03-13', 2, '', '2022-06-02 15:32:34', 3, '40', 88, 69, 77, 99, 'merrakch', '2', 'sas/s', '12');
+(13, '', '																																																												&lt;p&gt;Fourniture et installation des climatiseurs au niveau des sites relavant de la Division Exploitation F&egrave;s&lt;/p&gt;&lt;p&gt;N.B : Cet A.O est r&eacute;serv&eacute; aux PME nationales, coop&eacute;ratives, union de coop&eacute;ratives et auto-entrepreneurs.&lt;/p&gt;&lt;p&gt;N.B : Estimation Annuelle en TTC&lt;/p&gt;&lt;p&gt;N.B : D&eacute;p&ocirc;t du dossier d&amp;#x2019;AO avant l&amp;#x2019;OP&lt;/p&gt;																																																		', 0, '2000-03-13', '2023-03-13', 2, '', '2022-06-02 15:32:34', 3, '40', 88, 69, 77, 99, 'merrakch', '18:06:02', 'sas/s', '12');
 
 -- --------------------------------------------------------
 
@@ -146,15 +145,16 @@ CREATE TABLE `task_list` (
   `status` tinyint(4) NOT NULL,
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `bq_name` varchar(30) NOT NULL,
-  `agence` varchar(30) NOT NULL
+  `agence` varchar(30) NOT NULL,
+  `mntn` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Déchargement des données de la table `task_list`
 --
 
-INSERT INTO `task_list` (`id`, `project_id`, `task`, `description`, `status`, `date_created`, `bq_name`, `agence`) VALUES
-(17, 13, 'Caution provisoire', '														', 1, '2022-06-02 19:52:32', 'Attijari Wafabank', 'OMAR RIFFI CASABLANCA ');
+INSERT INTO `task_list` (`id`, `project_id`, `task`, `description`, `status`, `date_created`, `bq_name`, `agence`, `mntn`) VALUES
+(17, 13, 'Caution provisoire', '																																			', 1, '2022-06-02 19:52:32', 'Attijari Wafabank', 'OMAR RIFFI CASABLANCA ', 1203.65);
 
 -- --------------------------------------------------------
 
@@ -222,7 +222,8 @@ INSERT INTO `user_productivity` (`id`, `project_id`, `task_id`, `comment`, `subj
 -- Index pour la table `docs`
 --
 ALTER TABLE `docs`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `project_id` (`project_id`);
 
 --
 -- Index pour la table `files`
@@ -274,7 +275,7 @@ ALTER TABLE `user_productivity`
 -- AUTO_INCREMENT pour la table `docs`
 --
 ALTER TABLE `docs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `files`
@@ -292,7 +293,7 @@ ALTER TABLE `org`
 -- AUTO_INCREMENT pour la table `project_list`
 --
 ALTER TABLE `project_list`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT pour la table `system_settings`
@@ -326,7 +327,8 @@ ALTER TABLE `user_productivity`
 -- Contraintes pour la table `docs`
 --
 ALTER TABLE `docs`
-  ADD CONSTRAINT `docs_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `project_list` (`id`);
+  ADD CONSTRAINT `docs_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `project_list` (`id`),
+  ADD CONSTRAINT `docs_ibfk_2` FOREIGN KEY (`project_id`) REFERENCES `project_list` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
