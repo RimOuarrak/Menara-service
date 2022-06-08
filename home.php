@@ -72,12 +72,12 @@ if($_SESSION['login_type'] != 1)
                 $prog = $tprog > 0 ? ($cprog/$tprog) * 100 : 0;
                 $prog = $prog > 0 ?  number_format($prog,2) : $prog;
                 $prod = $conn->query("SELECT * FROM user_productivity where project_id = {$row['id']}")->num_rows;
-                if($row['status'] == 0 && strtotime(date('d-m-y')) >= strtotime($row['start_date'])):
+                if($row['status'] == 0 && strtotime(date('d/m/Y')) >= strtotime($row['start_date'])):
                 if($prod  > 0  || $cprog > 0)
                   $row['status'] = 2;
                 else
                   $row['status'] = 1;
-                elseif($row['status'] == 0 && strtotime(date('d-m-y')) > strtotime($row['end_date'])):
+                elseif($row['status'] == 0 && strtotime(date('d/m/Y')) > strtotime($row['end_date'])):
                 $row['status'] = 4;
                 endif;
                   ?>
@@ -97,7 +97,7 @@ if($_SESSION['login_type'] != 1)
 
                           <br>
                           <small>
-                              Due: <?php echo date("d-m-y",strtotime($row['end_date'])) ?>
+                              Due: <?php echo date("'d/m/Y'",strtotime($row['end_date'])) ?>
                           </small>
                       </td>
                       <td class="project_progress">

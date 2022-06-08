@@ -69,7 +69,7 @@
 			<div class="col-md-6">
 				<div class="form-group">
 					<label for="" class="control-label">Heure</label>
-					<input type="text" class="form-control form-control-sm" name="hr" value="<?php echo isset($hr) ? $hr : '' ?>">
+					<input type="time" class="form-control form-control-sm" name="hr" value="<?php echo isset($hr) ? $hr : '' ?>">
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -93,13 +93,13 @@
 			<div class="col-md-6">
             <div class="form-group">
               <label for="" class="control-label">Date début</label>
-              <input type="date" class="form-control form-control-sm" autocomplete="off" name="start_date" value="<?php echo isset($start_date) ? date("d-m-Y",strtotime($start_date)) : '' ?>">
+              <input type="date" class="form-control form-control-sm" autocomplete="off" name="start_date" value="<?php echo isset($start_date) ? date("d/m/Y",strtotime($start_date)) : '' ?>">
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
               <label for="" class="control-label">Date limite</label>
-              <input type="date" class="form-control form-control-sm" autocomplete="off" name="end_date" value="<?php echo isset($end_date) ? date("d-m-Y",strtotime($end_date)) : '' ?>">
+              <input type="date" class="form-control form-control-sm" autocomplete="off" name="end_date" value="<?php echo isset($end_date) ? date("d/m/Y",strtotime($end_date)) : '' ?>">
             </div>
           </div>
 		</div>

@@ -25,6 +25,7 @@
 						<th>Caution</th>
 						<th>Banque</th>
 						<th>Agence</th>
+						<th>Montant</th>
 						<th>Project Started</th>
 						<th>Project Due Date</th>
 						<th>Project Status</th>
@@ -59,12 +60,12 @@
 						$prog = $tprog > 0 ? ($cprog/$tprog) * 100 : 0;
 		                $prog = $prog > 0 ?  number_format($prog,2) : $prog;
 		                $prod = $conn->query("SELECT * FROM user_productivity where project_id = {$row['pid']}")->num_rows;
-		                if($row['pstatus'] == 0 && strtotime(date('d-m-y')) >= strtotime($row['start_date'])):
+		                if($row['pstatus'] == 0 && strtotime(date('d/m/Y')) >= strtotime($row['start_date'])):
 		                if($prod  > 0  || $cprog > 0)
 		                  $row['pstatus'] = 2;
 		                else
 		                  $row['pstatus'] = 1;
-		                elseif($row['pstatus'] == 0 && strtotime(date('d-m-y')) > strtotime($row['end_date'])):
+		                elseif($row['pstatus'] == 0 && strtotime(date('d/m/Y')) > strtotime($row['end_date'])):
 		                $row['pstatus'] = 4;
 		                endif;
 
@@ -91,8 +92,11 @@
 						<td>
 							<p><b><?php echo ucwords($row['agence']) ?></b></p>
 						</td>
-						<td><b><?php echo date("M d, Y",strtotime($row['start_date'])) ?></b></td>
-						<td><b><?php echo date("M d, Y",strtotime($row['end_date'])) ?></b></td>
+						<td>
+							<p><b><?php echo ucwords($row['mntn']) ?></b></p>
+						</td>
+						<td><b><?php echo date("d/m/Y",strtotime($row['start_date'])) ?></b></td>
+						<td><b><?php echo date("d/m/Y",strtotime($row['end_date'])) ?></b></td>
 						<td class="text-center">
 							<?php
 							  if($stat[$row['pstatus']] =='Pending'){

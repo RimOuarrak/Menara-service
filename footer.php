@@ -115,7 +115,7 @@ $(function () {
     })
 
      $('.datetimepicker').datetimepicker({
-		  format:'Y/m/d H:i',
+		  format:'d/m/Y H:i',
 		})
     
 

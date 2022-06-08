@@ -28,6 +28,10 @@ if(isset($_GET['id'])){
 			<input type="text" name="agence" id="agence" class="form-control" value="<?php echo isset($meta['agence']) ? $meta['agence']: '' ?>" required>
 		</div>
 		<div class="form-group">
+			<label for="name">Montant du caution</label>
+			<input type="text" name="mntn" id="mntn" class="form-control" value="<?php echo isset($meta['mntn']) ? $meta['mntn']: '' ?>" required>
+		</div>
+		<div class="form-group">
 			<label for="">Description</label>
 			<textarea name="description" id="" cols="30" rows="10" class="summernote form-control">
 				<?php echo isset($description) ? $description : '' ?>

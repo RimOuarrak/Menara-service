@@ -21,6 +21,10 @@ if(isset($_GET['id'])){
 		<dd><?php echo ucwords($agence) ?></dd>
 	</dl>
 	<dl>
+		<dt><b class="border-bottom border-primary">Montant de caution</b></dt>
+		<dd><?php echo ucwords($mntn) ?></dd>
+	</dl>
+	<dl>
 		<dt><b class="border-bottom border-primary">Status</b></dt>
 		<dd>
 			<?php 
