@@ -1,10 +1,13 @@
 <?php if(!isset($conn)){ include 'db_connect.php'; } ?>
-
+<div class="card-header">
+			<div class="card-tools">
+				<a class="btn btn-block btn-sm btn-default btn-flat border-primary" href="./index.php?page=Organisme"><i class="fa fa-file-excel" aria-hidden="true"></i> Importer un fichier</a>
+			</div>
+		</div>
 <div class="col-lg-12">
 	<div class="card card-outline card-primary">
 		<div class="card-body">
 			<form action="" id="manage-org">
-
         <input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
 		<div class="row">
 			<div class="col-md-6">

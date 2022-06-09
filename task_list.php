@@ -10,11 +10,14 @@
 			<table class="table tabe-hover table-condensed" id="list">
 				<colgroup>
 					<col width="5%">
-					<col width="15%">
-					<col width="20%">
-					<col width="15%">
-					<col width="15%">
 					<col width="10%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
+					<col width="10%">
+					<col width="5%">
 					<col width="10%">
 					<col width="10%">
 				</colgroup>
@@ -23,7 +26,6 @@
 						<th class="text-center">#</th>
 						<th>Project</th>
 						<th>Caution</th>
-						<th>Banque</th>
 						<th>Agence</th>
 						<th>Montant</th>
 						<th>Project Started</th>
@@ -85,9 +87,6 @@
 						<td>
 							<p><b><?php echo ucwords($row['task']) ?></b></p>
 							<p class="truncate"><?php echo strip_tags($desc) ?></p>
-						</td>
-						<td>
-							<p><b><?php echo ucwords($row['bq_name']) ?></b></p>
 						</td>
 						<td>
 							<p><b><?php echo ucwords($row['agence']) ?></b></p>
