@@ -1,11 +1,11 @@
 <?php if(!isset($conn)){ include 'db_connect.php'; } ?>
 <div class="card-header">
 			<div class="card-tools">
-				<a class="btn btn-block btn-sm btn-default btn-flat border-primary" href="./index.php?page=Organisme"><i class="fa fa-file-excel" aria-hidden="true"></i> Importer un fichier</a>
+				<a class="btn btn-block btn-sm btn-default btn-flat border-warning" href="./index.php?page=Organisme"><i class="fa fa-file-excel" aria-hidden="true"></i> Importer un fichier</a>
 			</div>
 		</div>
 <div class="col-lg-12">
-	<div class="card card-outline card-primary">
+	<div class="card card-outline card-info">
 		<div class="card-body">
 			<form action="" id="manage-org">
         <input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
@@ -35,7 +35,7 @@
         </form>
     	<div class="card-footer border-top border-info">
     		<div class="d-flex w-100 justify-content-center align-items-center">
-    			<button class="btn btn-flat  bg-gradient-primary mx-2" form="manage-org">Save</button>
+    			<button class="btn btn-flat  bg-gradient-info mx-2" form="manage-org">Save</button>
     			<button class="btn btn-flat bg-gradient-secondary mx-2" type="button" onclick="location.href='index.php?page=org_list'">Cancel</button>
     		</div>
     	</div>

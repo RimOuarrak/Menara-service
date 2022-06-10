@@ -1,4 +1,4 @@
-<?php include('db_connect.php') ?>
+<?php include('db_connect.php') ?> 
 <?php
 $twhere ="";
 if($_SESSION['login_type'] != 1)
@@ -31,7 +31,7 @@ if($_SESSION['login_type'] != 1)
         
       <div class="row">
         <div class="col-md-8">
-        <div class="card card-outline card-success">
+        <div class="card card-outline card-info">
           <div class="card-header">
             <b>Project Progress</b>
           </div>
@@ -127,7 +127,7 @@ if($_SESSION['login_type'] != 1)
                           ?>
                       </td>
                       <td>
-                        <a class="btn btn-primary btn-sm" href="./index.php?page=view_project&id=<?php echo $row['id'] ?>">
+                        <a class="btn btn-info btn-sm" href="./index.php?page=view_project&id=<?php echo $row['id'] ?>">
                               <i class="fas fa-folder">
                               </i>
                               View

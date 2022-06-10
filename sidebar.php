@@ -1,4 +1,4 @@
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-dark-warning elevation-4">
     <div class="dropdown">
    	<a href="./" class="brand-link">
         <?php if($_SESSION['login_type'] == 1): ?>
@@ -114,9 +114,9 @@
       if(s!='')
         page = page+'_'+s;
   		if($('.nav-link.nav-'+page).length > 0){
-             $('.nav-link.nav-'+page).addClass('active')
+             $('.nav-link.nav-'+page).addClass('active bg-warning')
   			if($('.nav-link.nav-'+page).hasClass('tree-item') == true){
-            $('.nav-link.nav-'+page).closest('.nav-treeview').siblings('a').addClass('active')
+            $('.nav-link.nav-'+page).closest('.nav-treeview').siblings('a').addClass('active bg-warning')
   				$('.nav-link.nav-'+page).closest('.nav-treeview').parent().addClass('menu-open')
   			}
         if($('.nav-link.nav-'+page).hasClass('nav-is-tree') == true){

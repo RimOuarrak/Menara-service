@@ -15,8 +15,8 @@
               <form method="post" id="import2_excel_form" enctype="multipart/form-data">
                 <table class="table">
                   <tr>
-                    <td width="80%"><input type="file" class="btn btn-flat  bg-gradient-primary mx-2" name="import2_excel" /></td>
-                    <td width="50%"><input type="submit" name="import2" id="import2" class="btn btn-flat  bg-gradient-primary mx-2" value="Importer" /></td>
+                    <td width="80%"><input type="file" class="btn btn-flat  bg-gradient-text-white mx-2" name="import2_excel" /></td>
+                    <td width="50%"><input type="submit" name="import2" id="import2" class="btn btn-flat  bg-gradient-info mx-2" value="Importer" /></td>
                   </tr>
                 </table>
               </form>
