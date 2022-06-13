@@ -29,17 +29,17 @@ if(isset($_GET['id'])){
 		<dd>
 			<?php 
         	if($status == 1){
-		  		echo "<span class='badge badge-secondary'>Pending</span>";
+		  		echo "<span class='badge badge-secondary'>Récupéré</span>";
         	}elseif($status == 2){
-		  		echo "<span class='badge badge-primary'>On-Progress</span>";
+		  		echo "<span class='badge badge-primary'>En péparation</span>";
         	}elseif($status == 3){
-		  		echo "<span class='badge badge-success'>Done</span>";
+		  		echo "<span class='badge badge-success'>Déposé</span>";
         	}
         	?>
 		</dd>
 	</dl>
 	<dl>
-		<dt><b class="border-bottom border-primary">Description</b></dt>
+		<dt><b class="border-bottom border-primary">Note</b></dt>
 		<dd><?php echo html_entity_decode($description) ?></dd>
 	</dl>
 </div>

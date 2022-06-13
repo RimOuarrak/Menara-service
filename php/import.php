@@ -46,12 +46,11 @@ unset($data[1]); // SKIP HEADER
 
 foreach($data as $row)
 {
-  $name  = str_replace("'","&amp;#x2019;",$row[3]);
+  $name  = str_replace("'","\'",$row[3]);
  $insert_data = array(
   ':num_ordr'  => $row[1],
   ':num_offr'  => $row[2],
-  
-  ':description'  => $row[4],
+  ':description' => $row[4],
   ':ctn'  => $row[5],
   ':est'  => $row[6],
   ':est_min'  => $row[7],
@@ -78,7 +77,8 @@ foreach($data as $row)
 
      
         
- $query = "INSERT INTO project_list (description, end_date, num_ordr, num_offr, ctn, est, est_min, est_max, ville, hr, qc, org_id) 
+ $query = "
+ INSERT INTO project_list (description, end_date, num_ordr, num_offr, ctn, est, est_min, est_max, ville, hr, qc, org_id) 
  VALUES (:description, :end_date, :num_ordr, :num_offr, :ctn, :est, :est_min, :est_max, :ville, :hr, :qc, :org_id)
  ";
 
@@ -87,7 +87,7 @@ foreach($data as $row)
 
 }
     if ($result == 1) {
-      $message = '<div class="alert alert-success">Data Imported Successfully</div>';
+      $message = '<div class="alert alert-success">Les données sont importés avec succès </div>';
     } else {
       $message = '<div class="alert alert-danger">An error occurred when uploading the data to the DB.</div>';
     }
@@ -95,12 +95,12 @@ foreach($data as $row)
  }
  else
  {
-  $message = '<div class="alert alert-danger">Only .xls .csv or .xlsx file allowed</div>';
+  $message = '<div class="alert alert-danger">Seulement .xls .csv or .xlsx file qont aloués</div>';
  }
 }
 else
 {
- $message = '<div class="alert alert-danger">Please Select File</div>';
+ $message = '<div class="alert alert-danger">Sélectionnez un fichier</div>';
 }
 
 echo $message;

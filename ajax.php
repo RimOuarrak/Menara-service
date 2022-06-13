@@ -71,8 +71,28 @@ if($action == 'delete_org'){
 	if($save)
 		echo $save;
 }
+if($action == 'save_bnq'){
+	$save = $crud->save_bnq();
+	if($save)
+		echo $save;
+}
+if($action == 'update_bnq'){
+	$save = $crud->update_bnq();
+	if($save)
+		echo $save;
+}
+if($action == 'delete_bnq'){
+	$save = $crud->delete_bnq();
+	if($save)
+		echo $save;
+}
 if($action == 'save_task'){
 	$save = $crud->save_task();
+	if($save)
+		echo $save;
+}
+if($action == 'update_task'){
+	$save = $crud->update_task();
 	if($save)
 		echo $save;
 }

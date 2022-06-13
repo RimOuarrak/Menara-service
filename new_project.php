@@ -11,12 +11,14 @@
 
         <input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
 		<div class="row">
+		<!--
 		<div class="col-md-6">
 				<div class="form-group">
 					<label for="" class="control-label">N° ordre</label>
 					<input type="text" class="form-control form-control-sm" autocomplete="off" name="num_ordr" value="<?php echo isset($num_ordr) ? $num_ordr : '' ?>">
 				</div>
 			</div>
+			-->
 		<div class="col-md-6">
 				<div class="form-group">
 					<label for="" class="control-label">N° d’Appel d’Offre</label>
@@ -33,25 +35,28 @@
               	$org = $conn->query("SELECT *,name FROM org order by name asc ");
               	while($row= $org->fetch_assoc()):
               	?>
-              	<option value="<?php echo $row['id'] ?>" <?php echo isset($org_id) && $org_id == $row['id'] ? "selected" : '' ?>><?php echo ucwords(html_entity_decode($row['name']))?></option>
+              	<option value="<?php echo $row['id'] ?>" <?php echo isset($org_id) && $org_id == $row['id'] ? "selected" : '' ?>><?php echo ucwords($row['name'])?></option>
               	<?php endwhile; ?>
               </select>
             </div>
           </div>
 	
-		<!-- note -->
+		<!-- note 
 			<div class="col-md-6">
 				<div class="form-group">
 					<label for="" class="control-label">Caution</label>
 					<input type="text" class="form-control form-control-sm" autocomplete="off" name="ctn" value="<?php echo isset($ctn) ? $ctn : '' ?>">
 				</div>
 			</div>
+		-->
 			<div class="col-md-6">
 				<div class="form-group">
 					<label for="" class="control-label">Estimation</label>
 					<input type="text" class="form-control form-control-sm" autocomplete="off" name="est" value="<?php echo isset($est) ? $est : '' ?>">
 				</div>
 			</div>
+		
+		<!-- 
 			<div class="col-md-6">
 				<div class="form-group">
 					<label for="" class="control-label">Estimation Min</label>
@@ -64,6 +69,7 @@
 					<input type="text" class="form-control form-control-sm" autocomplete="off" name="est_max" value="<?php echo isset($est_max) ? $est_max : '' ?>">
 				</div>
 			</div>
+			-->
 			<div class="col-md-6">
 				<div class="form-group">
 					<label for="" class="control-label">Ville</label>
@@ -79,16 +85,16 @@
 			<div class="col-md-6">
 				<div class="form-group">
 					<label for="" class="control-label">Qualification|Classification</label>
-					<input type="hour" class="form-control form-control-sm" name="qc" value="<?php echo isset($qc) ? $qc : '' ?>">
+					<input type="text" class="form-control form-control-sm" name="qc" value="<?php echo isset($qc) ? $qc : '' ?>">
 				</div>
 			</div>
           	<div class="col-md-6">
 				<div class="form-group">
 					<label for="">Status</label>
 					<select name="status" id="status" class="custom-select custom-select-sm">
-						<option value="0" <?php echo isset($status) && $status == 0 ? 'selected' : '' ?>>Pending</option>
-						<option value="3" <?php echo isset($status) && $status == 3 ? 'selected' : '' ?>>On-Hold</option>
-						<option value="5" <?php echo isset($status) && $status == 5 ? 'selected' : '' ?>>Done</option>
+						<option value="0" <?php echo isset($status) && $status == 0 ? 'selected' : '' ?>>En attente</option>
+						<option value="3" <?php echo isset($status) && $status == 3 ? 'selected' : '' ?>>Non retenu</option>
+						<option value="5" <?php echo isset($status) && $status == 5 ? 'selected' : '' ?>>Retenu</option>
 					</select>
 				</div>
 			</div>
@@ -96,7 +102,7 @@
 		<div class="row">
 			<div class="col-md-6">
             <div class="form-group">
-              <label for="" class="control-label">Date début</label>
+              <label for="" class="control-label">Date d'ouvérture</label>
               <input type="date" class="form-control form-control-sm" autocomplete="off" name="start_date" value="<?php echo isset($start_date) ? date("d/m/Y",strtotime($start_date)) : '' ?>">
             </div>
           </div>

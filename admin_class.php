@@ -240,7 +240,7 @@ Class Action {
 		foreach($_POST as $k => $v){
 			if(!in_array($k, array('id','user_ids')) && !is_numeric($k)){
 				if($k == 'description')
-					$v = htmlentities(str_replace("'","&#x2019;",$v));
+					$v = htmlentities(str_replace("'","\'",$v));
 				if(empty($data)){
 					$data .= " $k='$v' ";
 				}else{
@@ -275,7 +275,7 @@ Class Action {
 		foreach($_POST as $k => $v){
 			if(!in_array($k, array('id')) && !is_numeric($k)){
 				if($k == 'name')
-					$v = htmlentities(str_replace("'","&#x2019;",$v));
+					$v = htmlentities(str_replace("'","\'",$v));
 				if(empty($data)){
 					$data .= " $k='$v' ";
 				}else{
@@ -295,6 +295,37 @@ Class Action {
 	function delete_org(){
 		extract($_POST);
 		$delete = $this->db->query("DELETE FROM org where id = $id");
+		if($delete){
+			return 1;
+		}
+	}
+	///////////
+	function save_bnq(){
+		extract($_POST);
+		$data = "";
+		foreach($_POST as $k => $v){
+			if(!in_array($k, array('id')) && !is_numeric($k)){
+				if($k == 'nom')
+					$v = htmlentities(str_replace("'","\'",$v));
+				if(empty($data)){
+					$data .= " $k='$v' ";
+				}else{
+					$data .= ", $k='$v' ";
+				}
+			}
+		}
+		if(empty($id)){
+			$save = $this->db->query("INSERT INTO bnq set $data");
+		}else{
+			$save = $this->db->query("UPDATE bnq set $data where id = $id");
+		}
+		if($save){
+			return 1;
+		}
+	}
+	function delete_bnq(){
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM bnq where id = $id");
 		if($delete){
 			return 1;
 		}
@@ -335,7 +366,7 @@ Class Action {
 		foreach($_POST as $k => $v){
 			if(!in_array($k, array('id')) && !is_numeric($k)){
 				if($k == 'description')
-					$v = htmlentities(str_replace("'","&#x2019;",$v));
+				$v = htmlentities(str_replace("'","\'",$v));
 				if(empty($data)){
 					$data .= " $k='$v' ";
 				}else{
@@ -365,7 +396,7 @@ Class Action {
 		foreach($_POST as $k => $v){
 			if(!in_array($k, array('id')) && !is_numeric($k)){
 				if($k == 'comment')
-					$v = htmlentities(str_replace("'","&#x2019;",$v));
+				$v = htmlentities(str_replace("'","\'",$v));
 				if(empty($data)){
 					$data .= " $k='$v' ";
 				}else{

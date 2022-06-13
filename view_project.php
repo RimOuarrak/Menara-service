@@ -1,6 +1,6 @@
 <?php
 include 'db_connect.php';
-$stat = array("Pending","Started","On-Progress","On-Hold","Over Due","Done");
+$stat = array("Début","En attente","On-Progress","Non retenu","Over Due","Retenu");
 $qry = $conn->query("SELECT * FROM project_list where id = ".$_GET['id'])->fetch_array();
 foreach($qry as $k => $v){
 	$$k = $v;
@@ -31,9 +31,9 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 					<div class="row">
 						<div class="col-sm-6">
 							<dl>
-								<dt><b class="border-bottom border-primary">N°ordre</b></dt>
+								<dt><b class="border-bottom border-primary">N° d’ordre</b></dt>
 								<dd><?php echo $num_ordr ?></dd>
-							</dl>
+							</dl>							
 							<dl>
 								<dt><b class="border-bottom border-primary">N° d’Appel d’Offre</b></dt>
 								<dd><?php echo $num_offr ?></dd>
@@ -58,31 +58,20 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 							</dl>
 							
 						</div>
-						<div class="col-md-6">
-							<dl>
-								<dt><b class="border-bottom border-primary">Caution</b></dt>
-								<dd><?php echo $ctn ?></dd>
-							</dl>
-							<dl>
+						<div class="col-md-6">		
+						<dl>
 								<dt><b class="border-bottom border-primary">Estimation</b></dt>
-								<dd><?php echo $est ?></dd>
-							</dl>
-							<dl>
-								<dt><b class="border-bottom border-primary">Estimation min</b></dt>
-								<dd><?php echo $est_min ?></dd>
-							</dl>
-							<dl>
-								<dt><b class="border-bottom border-primary">Estimation max</b></dt>
-								<dd><?php echo $est_max ?></dd>
-							</dl>
+								<dd><?php echo str_replace(","," ",$est) ?></dd>
+							</dl>												
+							
 							
 							<dl>
-								<dt><b class="border-bottom border-primary">Date début</b></dt>
-								<dd><?php echo date("F d, Y",strtotime($start_date)) ?></dd>
+								<dt><b class="border-bottom border-primary">Date ouverture</b></dt>
+								<dd><?php echo date("d/m/Y",strtotime($start_date)) ?></dd>
 							</dl>
 							<dl>
-								<dt><b class="border-bottom border-primary">Date fin</b></dt>
-								<dd><?php echo date("F d, Y",strtotime($end_date)) ?></dd>
+								<dt><b class="border-bottom border-primary">Date limite</b></dt>
+								<dd><?php echo date("d/m/Y",strtotime($end_date)) ?></dd>
 							</dl>
 							<dl>
 								<dt><b class="border-bottom border-primary">Heure</b></dt>
@@ -96,17 +85,17 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 								<dt><b class="border-bottom border-primary">Status</b></dt>
 								<dd>
 									<?php
-									  if($stat[$status] =='Pending'){
+									  if($stat[$status] =='En attente'){
 									  	echo "<span class='badge badge-secondary'>{$stat[$status]}</span>";
-									  }elseif($stat[$status] =='Started'){
+									  }elseif($stat[$status] =='Début'){
 									  	echo "<span class='badge badge-primary'>{$stat[$status]}</span>";
-									  }elseif($stat[$status] =='On-Progress'){
+									  }elseif($stat[$status] =='En préparation'){
 									  	echo "<span class='badge badge-info'>{$stat[$status]}</span>";
-									  }elseif($stat[$status] =='On-Hold'){
-									  	echo "<span class='badge badge-warning'>{$stat[$status]}</span>";
-									  }elseif($stat[$status] =='Over Due'){
+									  }elseif($stat[$status] =='Non retenu'){
 									  	echo "<span class='badge badge-danger'>{$stat[$status]}</span>";
-									  }elseif($stat[$status] =='Done'){
+									  }elseif($stat[$status] =='Délai dépassé'){
+									  	echo "<span class='badge badge-warning'>{$stat[$status]}</span>";
+									  }elseif($stat[$status] =='Retenu'){
 									  	echo "<span class='badge badge-success'>{$stat[$status]}</span>";
 									  }
 									?>
@@ -134,12 +123,12 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 	<div class="row">
 		
 		<div class="col-md-12">
-			<div class="card card-outline card-primary">
+			<div class="card card-outline card-warning">
 				<div class="card-header">
 					<span><b>Suivie des cautions:</b></span>
 					<?php if($_SESSION['login_type'] != 3): ?>
 					<div class="card-tools">
-						<button class="btn btn-primary bg-gradient-primary btn-sm" type="button" id="new_task"><i class="fa fa-plus"></i> Ajouter une caution</button>
+						<button class="btn btn-warning bg-gradient-warning text-white btn-sm" type="button" id="new_task"><i class="fa fa-plus"></i> Ajouter une caution</button>
 					</div>
 				<?php endif; ?>
 				</div>
@@ -149,7 +138,8 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 						<colgroup>
 							<col width="5%">
 							<col width="25%">
-							<col width="30%">
+							<col width="15%">
+							<col width="15%">
 							<col width="15%">
 							<col width="15%">
 						</colgroup>
@@ -157,7 +147,8 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 							<th>#</th>
 							<th>Cautions</th>
 							<th>Banque</th>
-							<th>Description</th>
+							<th>Contact</th>
+							<th>Note</th>
 							<th>Status</th>
 							<th>Action</th>
 						</thead>
@@ -175,15 +166,16 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 			                        <td class="text-center"><?php echo $i++ ?></td>
 			                        <td class=""><b><?php echo ucwords($row['task']) ?></b></td>
 									<td class=""><b><?php echo ucwords($row['bq_name']) ?></b></td>
+									<td class=""><b><?php echo ucwords($row['contact']) ?></b></td>
 			                        <td class=""><p class="truncate"><?php echo strip_tags($desc) ?></p></td>
 			                        <td>
 			                        	<?php 
 			                        	if($row['status'] == 1){
-									  		echo "<span class='badge badge-secondary'>Pending</span>";
+									  		echo "<span class='badge badge-info'>Récupéré</span>";
 			                        	}elseif($row['status'] == 2){
-									  		echo "<span class='badge badge-primary'>On-Progress</span>";
+									  		echo "<span class='badge badge-primary'>En préparation</span>";
 			                        	}elseif($row['status'] == 3){
-									  		echo "<span class='badge badge-success'>Done</span>";
+									  		echo "<span class='badge badge-success'>Déposé</span>";
 			                        	}
 			                        	?>
 			                        </td>
@@ -192,12 +184,12 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 					                      Action
 					                    </button>
 					                    <div class="dropdown-menu" style="">
-					                      <a class="dropdown-item view_task" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"  data-task="<?php echo $row['task'] ?>">View</a>
+					                      <a class="dropdown-item view_task" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"  data-task="<?php echo $row['task'] ?>">Consulter</a>
 					                      <div class="dropdown-divider"></div>
 					                      <?php if($_SESSION['login_type'] != 3): ?>
-					                      <a class="dropdown-item edit_task" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"  data-task="<?php echo $row['task'] ?>">Edit</a>
+					                      <a class="dropdown-item edit_task" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"  data-task="<?php echo $row['task'] ?>">Modifier</a>
 					                      <div class="dropdown-divider"></div>
-					                      <a class="dropdown-item delete_task" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Delete</a>
+					                      <a class="dropdown-item delete_task" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Supprimer</a>
 										  <div class="dropdown-divider"></div>
 										  <a class="dropdown-item fichier" data-pid = '<?php echo $row['pid'] ?>' data-tid = '<?php echo $row['id'] ?>'  data-task = '<?php echo ucwords($row['task']) ?>'  target="_blank" href="cprov.php?id=<?php echo $row['id'] ?> ">PDF</a>
 					                  <?php endif; ?>
@@ -217,12 +209,12 @@ $org = $org->num_rows > 0 ? $org->fetch_array() : array();
 	
 	<div class="row">
 		<div class="col-md-12">
-			<div class="card card-outline card-primary">
+			<div class="card card-outline card-warning">
 				<div class="card-header">
 					<span><b>Les liens:</b></span>
 					<?php if($_SESSION['login_type'] != 3): ?>
 					<div class="card-tools">
-						<button class="btn btn-primary bg-gradient-primary btn-sm" type="button" id="new_link"><i class="fa fa-plus"></i> Ajouter une lien</button>
+						<button class="btn btn-warning bg-gradient-warning text-white btn-sm" type="button" id="new_link"><i class="fa fa-plus"></i> Ajouter une lien</button>
 					</div>
 				<?php endif; ?>
 				</div>

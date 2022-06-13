@@ -24,27 +24,28 @@ if(isset($_GET['id'])){
 			<input type="text" name="bq_name" id="bq_name" class="form-control" value="<?php echo isset($meta['bq_name']) ? $meta['bq_name']: '' ?>" required>
 		</div>
 		<div class="form-group">
-			<label for="name">Nom de l'agence</label>
-			<input type="text" name="agence" id="agence" class="form-control" value="<?php echo isset($meta['agence']) ? $meta['agence']: '' ?>" required>
+			<label for="name">Contact</label>
+			<input type="text" name="contact" id="contact" class="form-control" value="<?php echo isset($meta['contact']) ? $meta['contact']: '' ?>" required>
 		</div>
 		<div class="form-group">
 			<label for="name">Montant du caution</label>
 			<input type="text" name="mntn" id="mntn" class="form-control" value="<?php echo isset($meta['mntn']) ? $meta['mntn']: '' ?>" required>
 		</div>
 		<div class="form-group">
-			<label for="">Description</label>
+			<label for="">Status</label>
+			<select name="status" id="status" class="custom-select custom-select-sm">
+				<option value="1" <?php echo isset($status) && $status == 1 ? 'selected' : '' ?>>Récupéré</option>
+				<option value="2" <?php echo isset($status) && $status == 2 ? 'selected' : '' ?>>En préparation</option>
+				<option value="3" <?php echo isset($status) && $status == 3 ? 'selected' : '' ?>>Déposé</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="">Note</label>
 			<textarea name="description" id="" cols="30" rows="10" class="summernote form-control">
 				<?php echo isset($description) ? $description : '' ?>
 			</textarea>
 		</div>
-		<div class="form-group">
-			<label for="">Status</label>
-			<select name="status" id="status" class="custom-select custom-select-sm">
-				<option value="1" <?php echo isset($status) && $status == 1 ? 'selected' : '' ?>>Pending</option>
-				<option value="2" <?php echo isset($status) && $status == 2 ? 'selected' : '' ?>>On-Progress</option>
-				<option value="3" <?php echo isset($status) && $status == 3 ? 'selected' : '' ?>>Done</option>
-			</select>
-		</div>
+		
 	</form>
 </div>
 

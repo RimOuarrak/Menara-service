@@ -13,21 +13,19 @@
 		<div class="card-body">
 			<table class="table tabe-hover table-condensed" id="list">
 				<colgroup>
-					<col width="5%">
+					<col width="20%">
 					<col width="35%">
 					<col width="15%">
 					<col width="15%">
-					<col width="20%">
+					<col width="10%">
 					<col width="10%">
 				</colgroup>
 				<thead>
 					<tr>
-						<th class="text-center">#</th>						
-						<th>Les marchés</th>
-						<th>N°ordre</th>
-						<th>N° d’Appel d’Offre</th>
-						<th>Date Started</th>
-						<th>Due Date</th>
+						<th>N° d’AO</th>						
+						<th>Marchés</th>						
+						<th>Date ouverture</th>
+						<th>Date limite</th>
 						<th>Status</th>
 						<th>Action</th>
 					</tr>
@@ -36,7 +34,7 @@
 					<?php
 					
 					$i = 1;
-					$stat = array("Pending","Started","On-Progress","On-Hold","Over Due","Done");
+					$stat = array("En attente","Started","On-Progress","Non retenu","Over Due","Retenu");
 					$where = "";
 					if($_SESSION['login_type'] == 2){
 						$where = " where manager_id = '{$_SESSION['login_id']}' ";
@@ -55,7 +53,7 @@
 						$cprog = $conn->query("SELECT * FROM task_list where project_id = {$row['id']} and status = 3")->num_rows;
 						$prog = $tprog > 0 ? ($cprog/$tprog) * 100 : 0;
 		                $prog = $prog > 0 ?  number_format($prog,2) : $prog;
-		                $prod = $conn->query("SELECT * FROM user_productivity where project_id = {$row['id']}")->num_rows;		
+		                /*$prod = $conn->query("SELECT * FROM user_productivity where project_id = {$row['id']}")->num_rows;		
 						if($row['status'] == 0 && strtotime(date('d/m/Y')) >= strtotime($row['start_date'])):
 						if($prod  > 0  || $cprog > 0)
 		                  $row['status'] = 2;
@@ -63,17 +61,19 @@
 		                  $row['status'] = 1;
 						elseif($row['status'] == 0 && strtotime(date('d/m/Y')) > strtotime($row['end_date'])):
 						$row['status'] = 4;
-						endif;
+						endif;*/
 
 					?>
 					<tr>
-						<th class="text-center"><?php echo $i++ ?></th>						
+						<td>
+							<p><b><?php echo ucwords($row['num_offr']) ?></b></p>
+						</td>						
 						<td>
 							<p><b><?php if(isset($org['id'])) : ?>
 									<div class="d-flex align-items-center mt-1">
 										<b><?php 					
 										
-										echo ucwords(html_entity_decode($org['name'])) ?></b>
+										echo ucwords($org['name']) ?></b>
 									</div>
 									<?php else: ?>
 										<small><i>Organism Deleted from Database</i></small>
@@ -81,27 +81,23 @@
 								</b></p>
 							<p class="truncate"><?php echo strip_tags($desc) ?></p>
 						</td>
-						<td>
-							<p><b><?php echo ucwords($row['num_ordr']) ?></b></p>
-						</td>
-						<td>
-							<p><b><?php echo ucwords($row['num_offr']) ?></b></p>
-						</td>
+						
+						
 						<td><b><?php echo date("d/m/Y",strtotime($row['start_date'])) ?></b></td>
 						<td><b><?php echo date("d/m/Y",strtotime($row['end_date'])) ?></b></td>
 						<td class="text-center">
 							<?php
-							  if($stat[$row['status']] =='Pending'){
+							  if($stat[$row['status']] =='En attente'){
 							  	echo "<span class='badge badge-secondary'>{$stat[$row['status']]}</span>";
 							  }elseif($stat[$row['status']] =='Started'){
 							  	echo "<span class='badge badge-primary'>{$stat[$row['status']]}</span>";
 							  }elseif($stat[$row['status']] =='On-Progress'){
 							  	echo "<span class='badge badge-info'>{$stat[$row['status']]}</span>";
-							  }elseif($stat[$row['status']] =='On-Hold'){
-							  	echo "<span class='badge badge-warning'>{$stat[$row['status']]}</span>";
-							  }elseif($stat[$row['status']] =='Over Due'){
+							  }elseif($stat[$row['status']] =='Non retenu'){
 							  	echo "<span class='badge badge-danger'>{$stat[$row['status']]}</span>";
-							  }elseif($stat[$row['status']] =='Done'){
+							  }elseif($stat[$row['status']] =='Over Due'){
+							  	echo "<span class='badge badge-warning'>{$stat[$row['status']]}</span>";
+							  }elseif($stat[$row['status']] =='Retenu'){
 							  	echo "<span class='badge badge-success'>{$stat[$row['status']]}</span>";
 							  }
 							?>
@@ -111,12 +107,12 @@
 		                      Action
 		                    </button>
 		                    <div class="dropdown-menu" style="">
-		                      <a class="dropdown-item view_project" href="./index.php?page=view_project&id=<?php echo $row['id'] ?>" data-id="<?php echo $row['id'] ?>">View</a>
+		                      <a class="dropdown-item view_project" href="./index.php?page=view_project&id=<?php echo $row['id'] ?>" data-id="<?php echo $row['id'] ?>">Consulter</a>
 		                      <div class="dropdown-divider"></div>
 		                      <?php if($_SESSION['login_type'] != 3): ?>
-		                      <a class="dropdown-item" href="./index.php?page=edit_project&id=<?php echo $row['id'] ?>">Edit</a>
+		                      <a class="dropdown-item" href="./index.php?page=edit_project&id=<?php echo $row['id'] ?>">Modifier</a>
 		                      <div class="dropdown-divider"></div>
-		                      <a class="dropdown-item delete_project" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Delete</a>
+		                      <a class="dropdown-item delete_project" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Supprimer</a>
 		                  <?php endif; ?>
 		                    </div>
 						</td>

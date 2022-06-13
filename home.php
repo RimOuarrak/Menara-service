@@ -8,7 +8,7 @@ if($_SESSION['login_type'] != 1)
  <div class="col-12">
           <div class="card">
             <div class="card-body">
-              Welcome <?php echo $_SESSION['login_name'] ?>!
+              Bonjour <?php echo $_SESSION['login_name'] ?>!
             </div>
           </div>
   </div>
@@ -33,7 +33,7 @@ if($_SESSION['login_type'] != 1)
         <div class="col-md-8">
         <div class="card card-outline card-info">
           <div class="card-header">
-            <b>Project Progress</b>
+            <b>Progression des marchés</b>
           </div>
           <div class="card-body p-0">
             <div class="table-responsive">
@@ -47,15 +47,15 @@ if($_SESSION['login_type'] != 1)
                 </colgroup>
                 <thead>
                   <th>#</th>
-                  <th>Project</th>
-                  <th>Progress</th>
+                  <th>Projet</th>
+                  <th>Progression</th>
                   <th>Status</th>
                   <th></th>
                 </thead>
                 <tbody>
                 <?php
                 $i = 1;
-                $stat = array("Pending","Started","On-Progress","On-Hold","Over Due","Done");
+                $stat = array("Début","En attente","En préparation","Non retenu","Délai dépassé","Retenu");
                 $where = "";
                 if($_SESSION['login_type'] == 2){
                   $where = " where manager_id = '{$_SESSION['login_id']}' ";
@@ -111,17 +111,17 @@ if($_SESSION['login_type'] != 1)
                       </td>
                       <td class="project-state">
                           <?php
-                            if($stat[$row['status']] =='Pending'){
+                            if($stat[$row['status']] =='En attente'){
                               echo "<span class='badge badge-secondary'>{$stat[$row['status']]}</span>";
-                            }elseif($stat[$row['status']] =='Started'){
+                            }elseif($stat[$row['status']] =='Début'){
                               echo "<span class='badge badge-primary'>{$stat[$row['status']]}</span>";
-                            }elseif($stat[$row['status']] =='On-Progress'){
-                              echo "<span class='badge badge-info'>{$stat[$row['status']]}</span>";
-                            }elseif($stat[$row['status']] =='On-Hold'){
+                            }elseif($stat[$row['status']] =='En préparation'){
                               echo "<span class='badge badge-warning'>{$stat[$row['status']]}</span>";
-                            }elseif($stat[$row['status']] =='Over Due'){
+                            }elseif($stat[$row['status']] =='Non retenu'){
                               echo "<span class='badge badge-danger'>{$stat[$row['status']]}</span>";
-                            }elseif($stat[$row['status']] =='Done'){
+                            }elseif($stat[$row['status']] =='Délai dépassé'){
+                              echo "<span class='badge badge-info'>{$stat[$row['status']]}</span>";
+                            }elseif($stat[$row['status']] =='Retenu'){
                               echo "<span class='badge badge-success'>{$stat[$row['status']]}</span>";
                             }
                           ?>
@@ -130,7 +130,7 @@ if($_SESSION['login_type'] != 1)
                         <a class="btn btn-info btn-sm" href="./index.php?page=view_project&id=<?php echo $row['id'] ?>">
                               <i class="fas fa-folder">
                               </i>
-                              View
+                              Voir
                         </a>
                       </td>
                   </tr>

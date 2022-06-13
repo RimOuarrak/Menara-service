@@ -46,7 +46,7 @@
 						$where = " where concat('[',REPLACE(p.user_ids,',','],['),']') LIKE '%[{$_SESSION['login_id']}]%' ";
 					}
 					
-					$stat = array("Pending","Started","On-Progress","On-Hold","Over Due","Done");
+					$stat = array("Récupéré","Started","En préparation","On-Hold","Over Due","Déposé");
 					$qry = $conn->query("SELECT t.*,p.org_id as pname,p.start_date,p.status as pstatus, p.end_date,p.id as pid FROM task_list t inner join project_list p on p.id = t.project_id $where order by p.name asc");
 					while($row= $qry->fetch_assoc()):
 						$org = $conn->query("SELECT *,name FROM org where id = " . $row['pname']);
@@ -98,17 +98,17 @@
 						<td><b><?php echo date("d/m/Y",strtotime($row['end_date'])) ?></b></td>
 						<td class="text-center">
 							<?php
-							  if($stat[$row['pstatus']] =='Pending'){
+							  if($stat[$row['pstatus']] =='Récupéré'){
 							  	echo "<span class='badge badge-secondary'>{$stat[$row['pstatus']]}</span>";
 							  }elseif($stat[$row['pstatus']] =='Started'){
 							  	echo "<span class='badge badge-primary'>{$stat[$row['pstatus']]}</span>";
-							  }elseif($stat[$row['pstatus']] =='On-Progress'){
+							  }elseif($stat[$row['pstatus']] =='En préparation'){
 							  	echo "<span class='badge badge-info'>{$stat[$row['pstatus']]}</span>";
 							  }elseif($stat[$row['pstatus']] =='On-Hold'){
 							  	echo "<span class='badge badge-warning'>{$stat[$row['pstatus']]}</span>";
 							  }elseif($stat[$row['pstatus']] =='Over Due'){
 							  	echo "<span class='badge badge-danger'>{$stat[$row['pstatus']]}</span>";
-							  }elseif($stat[$row['pstatus']] =='Done'){
+							  }elseif($stat[$row['pstatus']] =='Déposé'){
 							  	echo "<span class='badge badge-success'>{$stat[$row['pstatus']]}</span>";
 							  }
 							?>
@@ -116,11 +116,11 @@
 						<td>
                         	<?php 
                         	if($row['status'] == 1){
-						  		echo "<span class='badge badge-secondary'>Pending</span>";
+						  		echo "<span class='badge badge-secondary'>Récupéré</span>";
                         	}elseif($row['status'] == 2){
-						  		echo "<span class='badge badge-primary'>On-Progress</span>";
+						  		echo "<span class='badge badge-primary'>En préparation</span>";
                         	}elseif($row['status'] == 3){
-						  		echo "<span class='badge badge-success'>Done</span>";
+						  		echo "<span class='badge badge-success'>Déposé</span>";
                         	}
                         	?>
                         </td>
