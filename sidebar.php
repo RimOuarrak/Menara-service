@@ -32,14 +32,14 @@
             <ul class="nav nav-treeview">
             <?php if($_SESSION['login_type'] != 3): ?>
               <li class="nav-item">
-                <a href="./index.php?page=new_org" class="nav-link nav-new_org tree-item">
+                <a href="./index.php?page=new_organism" class="nav-link nav-new_org tree-item">
                   <i class="fas fa-angle-right nav-icon"></i>
                   <p>Nouveau organisme</p>
                 </a>
               </li>
               <?php endif;?>
               <li class="nav-item">
-                <a href="./index.php?page=org_list" class="nav-link nav-org_list tree-item">
+                <a href="./index.php?page=organism_list" class="nav-link nav-org_list tree-item">
                   <i class="fas fa-angle-right nav-icon"></i>
                   <p>Liste des organismes</p>
                 </a>
@@ -72,7 +72,7 @@
             </ul>
           </li> 
           <li class="nav-item">
-                <a href="./index.php?page=task_list" class="nav-link nav-task_list">
+                <a href="./index.php?page=caution_list" class="nav-link nav-task_list">
                   <i class="fas fa-tasks nav-icon"></i>
                   <p>Cautions</p>
                 </a>
@@ -90,14 +90,14 @@
             <ul class="nav nav-treeview">
             <?php if($_SESSION['login_type'] != 3): ?>
               <li class="nav-item">
-                <a href="./index.php?page=new_bnq" class="nav-link nav-new_bnq tree-item">
+                <a href="./index.php?page=new_bank" class="nav-link nav-new_bnq tree-item">
                   <i class="fas fa-angle-right nav-icon"></i>
                   <p>Nouvelle banque</p>
                 </a>
               </li>
               <?php endif;?>
               <li class="nav-item">
-                <a href="./index.php?page=bnq_list" class="nav-link nav-bnq_list tree-item">
+                <a href="./index.php?page=bank_list" class="nav-link nav-bnq_list tree-item">
                   <i class="fas fa-angle-right nav-icon"></i>
                   <p>Liste des banques</p>
                 </a>
